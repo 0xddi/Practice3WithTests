@@ -104,6 +104,7 @@ public class CheckerBoardPositionTests
         
         // Assert
         Assert.True(success);
+        Assert.NotNull(position);
     }
     
     
@@ -121,5 +122,17 @@ public class CheckerBoardPositionTests
         Assert.False(success);
         Assert.Null(position);
     }
-    
+
+    [Fact]
+    // Using .Parse().ToString should be equal to the original string input
+    public void ParseAndToString_ValidInput_Success()
+    {
+        // Arrange & Act
+        string? input = "A5";
+        var newString = CheckerBoardPosition.Parse(input, CultureInfo.InvariantCulture).ToString();
+        var tempBool = newString == input;
+        
+        //Assert
+        Assert.True(tempBool);
+    }
 }
