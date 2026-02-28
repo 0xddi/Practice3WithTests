@@ -66,11 +66,8 @@ public class CheckerBoardPositionTests
         // Arrange
         var position = new CheckerBoardPosition(x, 1);
         
-        // Act
-        var letter = position.XLetter;
-        
-        // Assert
-        Assert.Equal(expectedLetter, letter);
+        // Act & Assert
+        Assert.Equal(expectedLetter, position.XLetter);
     }
     
     [Theory]
@@ -99,11 +96,8 @@ public class CheckerBoardPositionTests
     [InlineData("D4")]
     public void TryParse_ValidInput_Success(string input)
     {
-        // Act
-        var success = CheckerBoardPosition.TryParse(input, CultureInfo.InvariantCulture, out var position);
-        
-        // Assert
-        Assert.True(success);
+        // Act & Assert
+        Assert.True(CheckerBoardPosition.TryParse(input, CultureInfo.InvariantCulture, out var position));
         Assert.NotNull(position);
     }
     
@@ -115,24 +109,18 @@ public class CheckerBoardPositionTests
     [InlineData("X4")]
     public void TryParse_InvalidInput_Fail(string input)
     {
-        // Act
-        var success = CheckerBoardPosition.TryParse(input, CultureInfo.InvariantCulture, out var position);
-        
-        // Assert
-        Assert.False(success);
+        // Act & Assert
+        Assert.False(CheckerBoardPosition.TryParse(input, CultureInfo.InvariantCulture, out var position));
         Assert.Null(position);
     }
 
-    [Fact]
+    [Theory]
+    [InlineData("A5")]
     // Using .Parse().ToString should be equal to the original string input
-    public void ParseAndToString_ValidInput_Success()
+    public void ParseAndToString_ValidInput_Success(string input)
     {
-        // Arrange & Act
-        string? input = "A5";
-        var newString = CheckerBoardPosition.Parse(input, CultureInfo.InvariantCulture).ToString();
-        var tempBool = newString == input;
         
-        //Assert
-        Assert.True(tempBool);
+        // Act & Assert
+        Assert.True(CheckerBoardPosition.Parse(input, CultureInfo.InvariantCulture).ToString() == input);
     }
 }
