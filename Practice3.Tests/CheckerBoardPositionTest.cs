@@ -91,19 +91,35 @@ public class CheckerBoardPositionTests
     }
     
     
+    
     [Theory]
-    [InlineData("A1", true)]
-    [InlineData("Z9", false)]
-    [InlineData(null, false)]
-    // Можно ли в одном и том же методе теста проверять верные и неверные кейсы?
-    // Или обязательны отдельные методы с ..._Success и ..._Fail?
-    public void TryParse_InvalidAndValidInputs_ReturnsExpectedResult(string input, bool expectedSuccess)
+    [InlineData("A1")]
+    [InlineData("B2")]
+    [InlineData("C5")]
+    [InlineData("D4")]
+    public void TryParse_ValidInput_Success(string input)
     {
         // Act
         var success = CheckerBoardPosition.TryParse(input, CultureInfo.InvariantCulture, out var position);
         
         // Assert
-        Assert.Equal(expectedSuccess, success);
+        Assert.True(success);
+    }
+    
+    
+    [Theory]
+    [InlineData("Z9")]
+    [InlineData("B9")]
+    [InlineData("Y1")]
+    [InlineData("X4")]
+    public void TryParse_InvalidInput_Fail(string input)
+    {
+        // Act
+        var success = CheckerBoardPosition.TryParse(input, CultureInfo.InvariantCulture, out var position);
+        
+        // Assert
+        Assert.False(success);
+        Assert.Null(position);
     }
     
 }
